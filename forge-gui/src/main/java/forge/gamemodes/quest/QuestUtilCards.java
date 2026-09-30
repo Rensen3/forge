@@ -22,6 +22,7 @@ import com.google.common.collect.Lists;
 import forge.card.*;
 import forge.deck.Deck;
 import forge.deck.DeckSection;
+import forge.deck.DeckgenUtil;
 import forge.game.GameFormat;
 import forge.gamemodes.quest.bazaar.QuestItemType;
 import forge.gamemodes.quest.data.GameFormatQuest;
@@ -265,6 +266,13 @@ public final class QuestUtilCards {
         final int nR = (int)(questPreferences.getPrefInt(DifficultyPrefs.STARTING_RARES, idxDifficulty) * variantModifier);
 
         addAllCards(BoosterUtils.getQuestStarterDeck(formatStartingPool, nC, nU, nR, userPrefs));
+        if (FModel.getQuest().isPlanechase()) {
+            addAllCards(DeckgenUtil.generatePlanarPool().toFlatList());
+        }
+        if (FModel.getQuest().isArchenemyRumble()) {
+            addAllCards(DeckgenUtil.generateSchemePool().toFlatList());
+        }
+
     }
 
     /**

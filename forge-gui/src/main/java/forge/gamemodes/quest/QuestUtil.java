@@ -21,7 +21,10 @@ import com.google.common.collect.ImmutableMap;
 import forge.LobbyPlayer;
 import forge.card.CardEdition;
 import forge.card.CardRules;
+import forge.deck.CardPool;
 import forge.deck.Deck;
+import forge.deck.DeckSection;
+import forge.deck.DeckgenUtil;
 import forge.game.GameRules;
 import forge.game.GameType;
 import forge.game.player.RegisteredPlayer;
@@ -52,6 +55,8 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeSet;
+import java.util.Set;
+import java.util.HashSet;
 
 /**
  * <p>
@@ -616,11 +621,38 @@ public class QuestUtil {
      * @return A newly made RegisteredPlayer specific to the quest's variant
      */
     private static RegisteredPlayer getRegisteredPlayerByVariant(Deck deck){
-        switch (FModel.getQuest().getDeckConstructionRules()) {
-            case Default:
-                return new RegisteredPlayer(deck);
-            case Commander:
-                return RegisteredPlayer.forCommander(deck);
+        QuestController quest = FModel.getQuest();
+        if (quest.isVariantFormat()) {
+            Set<GameType> appliedVariants = new HashSet<GameType>();
+            CardPool schemes = null;
+            CardPool planes = null;
+            if (quest.getDeckConstructionRules().equals(DeckConstructionRules.Commander)) {
+                appliedVariants.add(GameType.Commander);
+            }
+            if (quest.isPlanechase()) {
+                planes = deck.get(DeckSection.Planes);
+                if (planes == null || planes.isEmpty()) {
+                    planes = DeckgenUtil.generatePlanarPool();
+                }
+                appliedVariants.add(GameType.Planechase);
+            }
+            if (quest.isArchenemyRumble()) {
+                schemes = deck.get(DeckSection.Schemes);
+                if (schemes == null || schemes.isEmpty()) {
+                    schemes = DeckgenUtil.generateSchemePool();
+                }
+                appliedVariants.add(GameType.ArchenemyRumble);
+            }
+            return RegisteredPlayer.forVariants(1, appliedVariants, deck,
+                    schemes != null ? schemes.toFlatList() : null, true,
+                    planes != null ? planes.toFlatList(): null, null);
+        } else {
+            switch (quest.getDeckConstructionRules()) {
+                case Default:
+                    return new RegisteredPlayer(deck);
+                case Commander:
+                    return RegisteredPlayer.forCommander(deck);
+            }
         }
         return null;
     }
