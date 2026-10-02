@@ -516,6 +516,30 @@ public final class QuestUtilCards {
         }
     }
 
+    private void generateAttractionsInShop(final int count) {
+        ItemPool<PaperCard> attractionPool = FModel.getAttractionPool();
+        if (questController.getFormat() != null) {
+            attractionPool = attractionPool.getFilteredPool(questController.getFormat().getFilterPrinted());
+        }
+        questAssets.getShopList().addAllOfTypeFlat(attractionPool.toFlatList().stream().collect(StreamUtil.random(count)));
+    }
+
+    private void generateStickersInShop(final int count) {
+        ItemPool<PaperCard> stickerPool = FModel.getStickerSheetPool();
+        if (questController.getFormat() != null) {
+            stickerPool = stickerPool.getFilteredPool(questController.getFormat().getFilterPrinted());
+        }
+        questAssets.getShopList().addAllOfTypeFlat(stickerPool.toFlatList().stream().collect(StreamUtil.random(count)));
+    }
+
+    private void generateContraptionsInShop(final int count) {
+        ItemPool<PaperCard> contraptionPool = FModel.getContraptionPool();
+        if (questController.getFormat() != null) {
+            contraptionPool = contraptionPool.getFilteredPool(questController.getFormat().getFilterPrinted());
+        }
+        questAssets.getShopList().addAllOfTypeFlat(contraptionPool.toFlatList().stream().collect(StreamUtil.random(count)));
+    }
+
     private static int getRandomCardFromBooster(final List<PaperCard> cards, final Predicate<PaperCard> predicate, final List<PaperCard> toAddTo, final int amount) {
     	if (amount <= 0) {
     		return 0;
@@ -694,6 +718,9 @@ public final class QuestUtilCards {
         generateTournamentsInShop(totalPacks);
         generateFatPacksInShop(totalPacks);
         generateBoosterBoxesInShop(totalPacks);
+        generateAttractionsInShop(4);
+        generateStickersInShop(4);
+        generateContraptionsInShop(4);
         if (questController.isPlanechase()) {
             generatePlanesInShop(totalPacks);
         }
