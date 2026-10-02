@@ -549,10 +549,10 @@ public final class CEditorQuest extends CDeckEditor<Deck> {
     }
 
     private Predicate<PaperCard> planesFilter() {
-        return c -> c.getRules().getType().isPlane() || c.getRules().getType().isPhenomenon();
+        return PaperCardPredicates.fromRules(CardRulesPredicates.IS_PLANE_OR_PHENOMENON);
     }
 
     private Predicate<PaperCard> schemesFilter() {
-        return c -> c.getRules().getType().isScheme();
+        return PaperCardPredicates.fromRules(CardRulesPredicates.IS_SCHEME);
     }
 }
