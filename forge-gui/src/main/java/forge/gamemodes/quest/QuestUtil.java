@@ -25,6 +25,7 @@ import forge.deck.CardPool;
 import forge.deck.Deck;
 import forge.deck.DeckSection;
 import forge.deck.DeckgenUtil;
+import forge.deck.DeckFormat;
 import forge.game.GameRules;
 import forge.game.GameType;
 import forge.game.player.RegisteredPlayer;
@@ -607,6 +608,12 @@ public class QuestUtil {
         if(FModel.getQuest().getDeckConstructionRules() == DeckConstructionRules.Commander){
             variant.add(GameType.Commander);
         }
+        if(FModel.getQuest().isPlanechase()){
+            variant.add(GameType.Planechase);
+        }
+        if(FModel.getQuest().isArchenemyRumble()){
+            variant.add(GameType.ArchenemyRumble);
+        }
 
         final HostedMatch hostedMatch = GuiBase.getInterface().hostMatch();
         final IGuiGame gui = GuiBase.getInterface().getNewGuiGame();
@@ -720,6 +727,16 @@ public class QuestUtil {
         if (FModel.getQuestPreferences().getPrefInt(QuestPreferences.QPref.WORLD_RULES_CONFORMANCE) == 1) {
             if(FModel.getQuest().getFormat() != null)
                 errorMessage = FModel.getQuest().getFormat().getDeckConformanceProblem(deck);
+        }
+
+        if(FModel.getQuest().isPlanechase()) {
+            errorMessage = DeckFormat.getPlaneSectionConformanceProblem(deck.get(DeckSection.Planes));
+            if(errorMessage != null) return errorMessage;
+        }
+
+        if(FModel.getQuest().isArchenemyRumble()) {
+            errorMessage = DeckFormat.getSchemeSectionConformanceProblem(deck.get(DeckSection.Schemes));
+            if(errorMessage != null) return errorMessage;
         }
 
         return errorMessage;

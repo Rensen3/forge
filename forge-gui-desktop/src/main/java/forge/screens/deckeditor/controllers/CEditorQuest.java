@@ -129,6 +129,14 @@ public final class CEditorQuest extends CDeckEditor<Deck> {
             allSections.add(DeckSection.Contraptions);
         }
 
+        if (FModel.getQuest().isPlanechase()) {
+            allSections.add(DeckSection.Planes);
+        }
+
+        if (FModel.getQuest().isArchenemyRumble()) {
+            allSections.add(DeckSection.Schemes);
+        }
+
         this.questData = questData0;
 
         final CardManager catalogManager = new CardManager(cDetailPicture0, false, true, false);
@@ -281,6 +289,14 @@ public final class CEditorQuest extends CDeckEditor<Deck> {
             cardpool.removeAll(getDeck().getOrCreate(DeckSection.Contraptions));
         }
 
+        if (FModel.getQuest().isPlanechase()) {
+            cardpool.removeAll(getDeck().getOrCreate(DeckSection.Planes));
+        }
+
+        if (FModel.getQuest().isArchenemyRumble()) {
+            cardpool.removeAll(getDeck().getOrCreate(DeckSection.Schemes));
+        }
+
         switch(FModel.getQuest().getDeckConstructionRules()){
             case Default: break;
             case Commander:
@@ -420,6 +436,16 @@ public final class CEditorQuest extends CDeckEditor<Deck> {
                 this.getCatalogManager().setPool(getRemainingCardPool().getFilteredPool(contraptionFilter()));
                 this.getDeckManager().setPool(getDeck().getOrCreate(DeckSection.Contraptions));
                 break;
+            case Planes :
+                this.getCatalogManager().setup(ItemManagerConfig.PLANAR_POOL);
+                this.getCatalogManager().setPool(getRemainingCardPool().getFilteredPool(planesFilter()));
+                this.getDeckManager().setPool(getDeck().getOrCreate(DeckSection.Planes));
+                break;
+            case Schemes :
+                this.getCatalogManager().setup(ItemManagerConfig.SCHEME_POOL);
+                this.getCatalogManager().setPool(getRemainingCardPool().getFilteredPool(schemesFilter()));
+                this.getDeckManager().setPool(getDeck().getOrCreate(DeckSection.Schemes));
+                break;
         }
 
         this.sectionMode = sectionMode;
@@ -506,5 +532,13 @@ public final class CEditorQuest extends CDeckEditor<Deck> {
 
     private Predicate<PaperCard> contraptionFilter() {
         return c -> c.getRules().getType().isContraption();
+    }
+
+    private Predicate<PaperCard> planesFilter() {
+        return c -> c.getRules().getType().isPlane() || c.getRules().getType().isPhenomenon();
+    }
+
+    private Predicate<PaperCard> schemesFilter() {
+        return c -> c.getRules().getType().isScheme();
     }
 }

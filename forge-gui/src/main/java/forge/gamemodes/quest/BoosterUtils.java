@@ -25,6 +25,7 @@ import java.util.stream.Collectors;
 
 import forge.StaticData;
 import forge.card.*;
+import forge.deck.DeckgenUtil;
 import forge.item.*;
 import forge.util.*;
 import org.apache.commons.lang3.StringUtils;
@@ -555,6 +556,35 @@ public final class BoosterUtils {
         }
 
         return rewards;
+    }
+
+    public static List<PaperCard> generatePlanarDeck() {
+        List<PaperCard> planarDeck = new ArrayList<>();
+        List<PaperCard> allPlanars = FModel.getPlanechaseCards().toFlatList();
+        int phenoms = 0;
+        int targetsize = 10;
+        while (true) {
+            PaperCard rndPlane = Aggregates.random(allPlanars);
+            allPlanars.remove(rndPlane);
+
+            if (rndPlane.getRules().getType().isPhenomenon() && phenoms < 2) {
+                planarDeck.add(rndPlane);
+                phenoms++;
+            }
+            else if (rndPlane.getRules().getType().isPlane()) {
+                planarDeck.add(rndPlane);
+            }
+
+            if (allPlanars.isEmpty() || planarDeck.size() == targetsize) {
+                break;
+            }
+        }
+
+        return planarDeck;
+    }
+
+    public static List<PaperCard> generateSchemeDeck() {
+        return DeckgenUtil.generateSchemePool().toFlatList();
     }
 
     public static void sort(List<PaperCard> cards) {
