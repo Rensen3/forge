@@ -1,0 +1,12 @@
+Name:Animate Object
+ManaCost:4 U
+Types:Sorcery
+A:SP$ PutCounter | Defined$ You | CounterType$ TICKET | CounterNum$ 7 | SubAbility$ DBToken | StackDescription$ SpellDescription | SpellDescription$ You get seven {TK}. Choose an inanimate object you own from outside the game. Put a power and toughness sticker on it. You may also put a name sticker, an art sticker, and/or an ability sticker on it. Put it onto the battlefield as a creature token.
+SVar:DBToken:DB$ Token | TokenAmount$ 1 | TokenScript$ animated_object | RememberTokens$ True | SubAbility$ PTSticker | StackDescription$ SpellDescription
+SVar:PTSticker:DB$ PutSticker | Defined$ Remembered | Kind$ PT | SubAbility$ NameSticker | StackDescription$ SpellDescription
+SVar:NameSticker:DB$ PutSticker | Defined$ Remembered | Kind$ Name | Optional$ True | SubAbility$ ArtSticker | StackDescription$ SpellDescription
+SVar:ArtSticker:DB$ PutSticker | Defined$ Remembered | Kind$ Art | Optional$ True | SubAbility$ AbilitySticker | StackDescription$ SpellDescription
+SVar:AbilitySticker:DB$ PutSticker | Defined$ Remembered | Kind$ Ability | Optional$ True | SubAbility$ DBCleanup | StackDescription$ SpellDescription
+SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
+AI:RemoveDeck:All
+Oracle: You get seven {TK}. Choose an inanimate object you own from outside the game. Put a power and toughness sticker on it. You may also put a name sticker, an art sticker, and/or an ability sticker on it. Put it onto the battlefield as a creature token.
