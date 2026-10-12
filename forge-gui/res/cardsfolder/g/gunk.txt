@@ -1,0 +1,5 @@
+Name:Gunk
+ManaCost:no cost
+Types:Sorcery
+K:Cycling:4
+Oracle:Cycling {4}
