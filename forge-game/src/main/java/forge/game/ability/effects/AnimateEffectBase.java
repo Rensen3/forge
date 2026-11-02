@@ -52,12 +52,19 @@ public abstract class AnimateEffectBase extends SpellAbilityEffect {
             final CardType addType, final CardType removeType, final ColorSet colors,
             final List<String> keywords, final List<String> removeKeywords, final List<String> hiddenKeywords,
             List<String> abilities, final List<String> triggers, final List<String> replacements, final List<String> stAbs,
-            final long timestamp, final String duration) {
+            final long originalTimestamp, final String duration) {
         final Card source = sa.getHostCard();
         final Game game = source.getGame();
         final boolean perpetual = "Perpetual".equals(duration);
 
         boolean addAllCreatureTypes = sa.hasParam("AddAllCreatureTypes");
+
+        final long timestamp;
+        if (sa.hasParam("IgnoreTimestamps")) {
+            timestamp = 1;
+        } else {
+            timestamp = originalTimestamp;
+        }
 
         Set<RemoveType> remove = EnumSet.noneOf(RemoveType.class);
         if (sa.hasParam("RemoveSuperTypes"))
