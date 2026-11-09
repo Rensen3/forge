@@ -33,6 +33,7 @@ public enum ReplacementType {
     GameLoss(ReplaceGameLoss.class),
     GameWin(ReplaceGameWin.class),
     Learn(ReplaceLearn.class),
+    LethalPoison(ReplaceLethalPoison.class),
     LifeReduced(ReplaceLifeReduced.class),
     LoseMana(ReplaceLoseMana.class),
     Mill(ReplaceMill.class),
