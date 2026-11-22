@@ -539,3 +539,5 @@ Glass:Glasses
 Stained:Stained
 Judge:Judges
 Chef:Chefs
+[WalkerTypes]
+Luxior

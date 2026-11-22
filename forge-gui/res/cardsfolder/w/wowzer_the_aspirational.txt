@@ -1,0 +1,24 @@
+Name:Wowzer, the Aspirational
+ManaCost:C W U B R G S
+Types:Legendary Snow Creature Wurm
+PT:10/10
+T:Mode$ Attacks | ValidCard$ Card.Self | Execute$ WinGame | CheckSVar$ WinCheck | TriggerDescription$ Whenever CARDNAME attacks, if you have an {E}, control a Blood, a Clue, a Food, a Map, a Powerstone, and a Treasure, are the monarch, and have the city's blessing and the initiative, you win the game.
+SVar:WinGame:DB$ WinsGame | Defined$ You
+SVar:WinCheck:Count$Compare Energy GE1.Blood.0
+SVar:Blood:Count$Compare Clue GE1.Clue.0
+SVar:Clue:Count$Compare CClue GE1.Food.0
+SVar:Food:Count$Compare CFood GE1.Map.0
+SVar:Map:Count$Compare CMap GE1.Powerstone.0
+SVar:Powerstone:Count$Compare CPowerstone GE1.Treasure.0
+SVar:Treasure:Count$Compare CTreasure GE1.Monarch.0
+SVar:Monarch:Count$Monarch.Blessing.0
+SVar:Blessing:Count$Blessing.Initiative.0
+SVar:Initiative:Count$Initiative.1.0
+SVar:Energy:Count$YourCountersEnergy
+SVar:CBlood:Count$Valid Blood.YouCtrl
+SVar:CClue:Count$Valid Clue.YouCtrl
+SVar:CFood:Count$Valid Food.YouCtrl
+SVar:CMap:Count$Valid Map.YouCtrl
+SVar:CPowerstone:Count$Valid Powerstone.YouCtrl
+SVar:CTreasure:Count$Valid Treasure.YouCtrl
+Oracle:Whenever Wowzer, the Aspirational attacks, if you have an {E}, control a Blood, a Clue, a Food, a Map, a Powerstone, and a Treasure, are the monarch, and have the city's blessing and the initiative, you win the game.

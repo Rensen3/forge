@@ -1,0 +1,7 @@
+Name:Microscope
+ManaCost:2
+Types:Artifact
+A:AB$ Surveil | Cost$ T | Amount$ 1 | SpellDescription$ Surveil 1.
+A:AB$ Effect | Cost$ T | RememberObjects$ ThisTargetedCard | ForgetOnMoved$ Graveyard | StaticAbilities$ StaticGerm | ValidTgts$ Permanent | TgtZone$ Graveyard | SpellDescription$ Target permanent card in a graveyard becomes a 0/0 black Germ creature in addition to its other colors and types until end of turn. (This effect ends if it leaves the graveyard.)
+SVar:StaticGerm:Mode$ Continuous | AddType$ Creature & Germ | SetPower$ 0 | SetToughness$ 0 | AddColor$ Black | Affected$ Card.IsRemembered | EffectZone$ Command | AffectedZone$ Graveyard | Description$ Target permanent card in a graveyard becomes a 0/0 black Germ creature in addition to its other colors and types until end of turn. (This effect ends if it leaves the graveyard.)
+Oracle:{T}: Surveil 1.\n{T}: Target permanent card in a graveyard becomes a 0/0 black Germ creature in addition to its other colors and types until end of turn. (This effect ends if it leaves the graveyard.)
