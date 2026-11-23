@@ -1,0 +1,13 @@
+Name:Gerrymandering
+ManaCost:2 G
+Types:Sorcery
+A:SP$ ChangeZoneAll | Origin$ Battlefield | Destination$ Exile | Defined$ Land | RememberChanged$ True | RandomOrder$ True | SubAbility$ StorePlayer | SpellDescription$ Exile all lands. Give each player a number of those cards chosen at random equal to the number of those cards the player controlled. Each player returns those cards to the battlefield under their control.
+SVar:StorePlayer:DB$ RepeatEach | RepeatSubAbility$ StoreAmount | RepeatPlayers$ Player | SubAbility$ ChangePlayer
+SVar:StoreAmount:DB$ StoreSVar | SVar$ EachPlayer | Type$ CountSVar | Expression$ ExiledLands
+SVar:ChangePlayer:DB$ RepeatEach | RepeatSubAbility$ ChangeChoose | RepeatPlayers$ Player | SubAbility$ DBClearRemembered
+SVar:ChangeChoose:DB$ ChooseCard | ChoiceZone$ Exile | DefinedCards$ Remembered | Amount$ X | AtRandom$ True | ForgetChosen$ True | SubAbility$ ChangeControl
+SVar:ChangeControl:DB$ ChangeZone | Defined$ ChosenCard | GainControl$ Remembered | Origin$ Exile | Destination$ Battlefield | Chooser$ Remembered
+SVar:DBClearRemembered:DB$ Cleanup | ClearRemembered$ True
+SVar:ExiledLands:Count$ValidExile Card.IsRemembered+ControlledBy Remembered
+SVar:X:PlayerCountRemembered$SVarAmount
+Oracle:Exile all lands. Give each player a number of those cards chosen at random equal to the number of those cards the player controlled. Each player returns those cards to the battlefield under their control.
