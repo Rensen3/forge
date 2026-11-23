@@ -1,0 +1,4 @@
+Name:_____
+ManaCost:no cost
+Types:Creature
+PT:0/0
