@@ -3,7 +3,7 @@ ManaCost:U
 Types:Enchantment
 T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Static$ True | Execute$ TrigEachPlayer | TriggerDescription$ Each player plays with the top card of their library held against their forehead, revealed to each other player.
 SVar:TrigEachPlayer:DB$ RepeatEach | RepeatSubAbility$ SpyEffect | RepeatPlayers$ Player
-SVar:SpyEffect:DB$ Effect | Name$ Psychic Network's Effect  | EffectOwner$ RememberedPlayer | Duration$ UntilHostLeavesPlay
+SVar:SpyEffect:DB$ Effect | Name$ Psychic Network's Effect  | EffectOwner$ RememberedPlayer | Duration$ Permanent | Unique$ True
 S:Mode$ Continuous | EffectZone$ Battlefield | Affected$ Effect.namedPsychic Network's Effect | AffectedZone$ Command | AddStaticAbility$ StaticSpy
 SVar:StaticSpy:Mode$ Continuous | EffectZone$ Command | Affected$ Card.TopLibrary+YouCtrl | AffectedZone$ Library | MayLookAt$ Player.Other | Description$ Play with the top card of your library revealed to each other player.
 Oracle:Each player plays with the top card of their library held against their forehead, revealed to each other player.
