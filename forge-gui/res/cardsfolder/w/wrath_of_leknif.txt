@@ -1,0 +1,7 @@
+Name:Wrath of Leknif
+ManaCost:1 W W U
+Types:Sorcery
+A:SP$ DestroyAll | ValidCards$ Creature | NoRegen$ True | SubAbility$ DBUntap | SpellDescription$ Destroy all creatures. They can't be regenerated.
+SVar:DBUntap:DB$ Untap | UntapUpTo$ True | UntapType$ Land | Amount$ 4 | SpellDescription$ Untap up to four lands you control.
+SVar:FreeSpellAI:True
+Oracle:Destroy all creatures. They can't be regenerated. Untap up to four lands you control.

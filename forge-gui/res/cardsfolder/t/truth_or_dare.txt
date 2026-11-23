@@ -1,0 +1,9 @@
+Name:Truth or Dare
+ManaCost:1 U U
+Types:Sorcery
+A:SP$ GenericChoice | Choices$ Truth,Dare | ValidTgts$ Opponent | ShowChoice$ True | SpellDescription$ Target opponent chooses one —\n• Truth — That player plays with their hand revealed for the rest of the game.\n• Dare — Mill all but the bottom ten cards of that player's library. (To mill, put the top card of that library into its owner’s graveyard.)
+SVar:Truth:DB$ Effect | StaticAbilities$ STRevealHand | RememberObjects$ TargetedPlayer | Duration$ Permanent | SpellDescription$ Truth — That player plays with their hand revealed for the rest of the game.
+SVar:STRevealHand:Mode$ Continuous | AffectedZone$ Hand | Affected$ Card.RememberedPlayerOwn | MayLookAt$ Player | Description$ The targeted player plays with their hand revealed.
+SVar:Dare:DB$ Mill | Defined$ TargetedPlayer | NumCards$ X | SpellDescription$ Dare — Mill all but the bottom ten cards of that player's library.
+SVar:X:Count$ValidLibrary Card.OwnedBy TargetedPlayer/Minus.10
+Oracle:Target opponent chooses one —\n• Truth — That player plays with their hand revealed for the rest of the game.\n• Dare — Mill all but the bottom ten cards of that player's library. (To mill, put the top card of that library into its owner’s graveyard.)

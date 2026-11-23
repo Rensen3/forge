@@ -1,0 +1,14 @@
+Name:Lich's Duel Mastery
+ManaCost:3 B B B
+Types:Legendary Enchantment
+K:Hexproof
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigExile | TriggerDescription$ When CARDNAME enters the battlefield, exile the top five cards of your library face down as shields.
+SVar:TrigExile:DB$ Dig | Defined$ You | DigNum$ 5 | ChangeNum$ All | DestinationZone$ Exile | ExileFaceDown$ True
+R:Event$ LifeReduced | ActiveZones$ Battlefield | ValidPlayer$ You | ReplaceWith$ CheckShield | Description$ If you would lose life, instead put one of your shields into your hand. If you can't, sacrifice CARDNAME.
+SVar:CheckShield:DB$ Branch | BranchConditionSVar$ X | BranchConditionSVarCompare$ GE1 | TrueSubAbility$ BreakShield | FalseSubAbility$ SacSelf
+SVar:BreakShield:DB$ ChangeZone | Origin$ Exile | Destination$ Hand | Mandatory$ True | Hidden$ True | ChangeType$ Card.ExiledWithSource
+SVar:SacSelf:DB$ SacrificeAll | Defined$ Self | Controller$ You
+T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Any | ValidCard$ Card.Self | Execute$ TrigLose | TriggerDescription$ When CARDNAME leaves the battlefield, you lose the game.
+SVar:TrigLose:DB$ LosesGame | Defined$ You
+SVar:X:Count$ValidExile Card.ExiledWithSource
+Oracle:Hexproof\nWhen Lich's Duel Mastery enters the battlefield, exile the top five cards of your library face down as shields.\nIf you would lose life, instead put one of your shields into your hand. If you can't, sacrifice Lich's Duel Mastery.\nWhen Lich's Duel Mastery leaves the battlefield, you lose the game.

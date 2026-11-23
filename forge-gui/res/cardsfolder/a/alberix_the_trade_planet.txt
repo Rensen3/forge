@@ -1,0 +1,12 @@
+Name:Alberix, the Trade Planet
+ManaCost:2 U U
+Types:World Enchantment
+T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self | Execute$ TrigExile | TriggerDescription$ Planet (When this permanent enters, exile the top five cards of your library as its resources.)
+SVar:TrigExile:DB$ Dig | Defined$ You | DigNum$ 5 | ChangeNum$ All | DestinationZone$ Exile
+T:Mode$ Phase | Phase$ Main1 | ValidPlayer$ You | TriggerZones$ Battlefield | Execute$ TrigCharm | TriggerDescription$ Trade Routes — At the beginning of your precombat main phase, ABILITY
+SVar:TrigCharm:DB$ Charm | Choices$ Choose,Exile
+SVar:Choose:DB$ ChooseCard | UnlessCost$ Discard<1/Card> | UnlessPayer$ You | UnlessSwitched$ True | Mandatory$ True | Amount$ 2 | Choices$ Card.ExiledWithSource | ChoiceZone$ Exile | SubAbility$ DBChange | SpellDescription$ Discard a card. If you do, put two of NICKNAME's resources into its owner's hand.
+SVar:DBChange:DB$ ChangeZone | Defined$ ChosenCard | Origin$ Exile | Destination$ Hand | SubAbility$ DBCleanup
+SVar:DBCleanup:DB$ Cleanup | ClearChosenCard$ True 
+SVar:Exile:DB$ Dig | Defined$ You | DigNum$ 1 | ChangeNum$ All | DestinationZone$ Exile | SpellDescription$ Exile the top card of your library as a resource.
+Oracle:Planet (When this permanent enters, exile the top five cards of your library as its resources.)\nTrade Routes — At the beginning of your precombat main phase, choose one —\n• Discard a card. If you do, put two of Alberix's resources into its owner's hand.\n• Exile the top card of your library as a resource.

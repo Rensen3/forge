@@ -1,0 +1,12 @@
+Name:Meandered Towershell
+ManaCost:G
+Types:Enchantment Aura
+K:Enchant:Creature
+SVar:AttachAILogic:Curse
+S:Mode$ Continuous | AffectedDefined$ Enchanted | Affected$ Creature | AddKeyword$ Landwalk:Island | AddTrigger$ AttackTrig | Description$ Enchanted creature has islandwalk. (It can't be blocked as long as defending player controls an Island.) and "Whenever this creature attacks, exile it and Meandered Towershell. Return it to the battlefield under your control tapped and attacking at the beginning of the declare attackers step on your next turn, then return Meandered Towershell to the battlefield under its owner's control attached to that creature."
+SVar:AttackTrig:Mode$ Attacks | ValidCard$ Card.Self | Execute$ TrigExile | TriggerZones$ Battlefield | TriggerDescription$ Whenever this creature attacks, exile it and Meandered Towershell. Return it to the battlefield under your control tapped and attacking at the beginning of the declare attackers step on your next turn, then return Meandered Towershell to the battlefield under its owner's control attached to that creature.
+SVar:TrigExile:DB$ ChangeZone | Defined$ Self & OriginalHost | Origin$ Battlefield | Destination$ Exile | RememberChanged$ True | SubAbility$ DelTrig
+SVar:DelTrig:DB$ DelayedTrigger | ConditionDefined$ Remembered | ConditionPresent$ Card | DelayedTriggerDefinedPlayer$ You | RememberObjects$ RememberedLKI | ThisTurn$ True | Mode$ Phase | Phase$ Declare Attackers | Execute$ TrigReturn | TriggerDescription$ Return CARDNAME to the battlefield tapped and attacking, then return Meandered Towershell to the battlefield under its owner's control attached to CARDNAME.
+SVar:TrigReturn:DB$ ChangeZone | Defined$ DelayTriggerRememberedLKI.Self | Origin$ Exile | Destination$ Battlefield | Attacking$ True | Tapped$ True | GainControl$ True | SubAbility$ ReturnEnchant
+SVar:ReturnEnchant:DB$ ChangeZone | Defined$ DelayTriggerRememberedLKI.!Self | Origin$ Exile | Destination$ Battlefield | AttachedTo$ DelayTriggerRememberedLKI.Self
+Oracle:Enchanted creature has islandwalk and "Whenever this creature attacks, exile it and Meandered Towershell. Return it to the battlefield under your control tapped and attacking at the beginning of the declare attackers step on your next turn, then return Meandered Towershell to the battlefield under its owner's control attached to that creature."
