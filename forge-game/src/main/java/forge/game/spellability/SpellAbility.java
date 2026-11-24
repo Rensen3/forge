@@ -774,7 +774,7 @@ public abstract class SpellAbility extends CardTraitBase implements ISpellAbilit
     }
 
     public boolean isCrew() {
-        return isKeyword(Keyword.CREW);
+        return isKeyword(Keyword.CREW) || this.hasParam("IsCrew");
     }
 
     public boolean isEquip() {

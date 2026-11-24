@@ -3,7 +3,7 @@ ManaCost:no cost
 Types:Artifact Land — Urza's Vehicle
 PT:3/3
 K:Hexproof:Red
-K:Crew:2:Cost$ tapXType<2/Card.Food> | PrecostDesc$ Food Crew | CostDesc$ 2 (Tap two Foods you control: | SpellDescription$ CARDNAME becomes an artifact creature until end of turn.)
+A:AB$ Animate | Cost$ tapXType<2/Card.Food+Other> | PrecostDesc$ Food Crew | CostDesc$ 2 (Tap two Foods you control: | Defined$ Self | Types$ Artifact,Creature | IsCrew$ True | SpellDescription$ CARDNAME becomes an artifact creature until end of turn.)
 A:AB$ Mana | Cost$ T | Produced$ C | SpellDescription$ Add {C}.
 A:AB$ Token | Cost$ 7 T | TokenScript$ c_a_hot_dog_sac | TokenAmount$ 2 | TokenOwner$ You | SpellDescription$ Create two Food tokens named Hot Dog
 T:Mode$ Sacrificed | ValidPlayer$ You | ValidCard$ Permanent.namedHot Dog | Execute$ DBTreasure | TriggerDescription$ Whenever you sacrifice a Hot Dog, create a Treasure token.
